@@ -1,0 +1,118 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 2rem;
+    height: 20vh;
+}
+
+.userBtn button {
+    display: block;
+    width: 150px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.hero {
+    background-color: aqua;
+    height: 80vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+}
+
+.project_info h1 {
+    font-size: 42px;
+    width: 60%;
+}
+
+.startBtn {
+    display: block;
+    width: 210px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-size: 26px;
+    margin-top: 3rem;
+    cursor: pointer;
+}
+
+.addUser_pop_up {
+    position: absolute;
+    top: -20px;
+    left: 40%;
+    background-color: red;
+    text-align: center;
+    align-content: center;
+    color: white;
+    width: 400px;
+    height: 60px;
+    display: none;
+}
+
+.createdUser_pop_up {
+    position: absolute;
+    top: -20px;
+    left: 40%;
+    background-color: green;
+    text-align: center;
+    align-content: center;
+    color: white;
+    width: 400px;
+    height: 60px;
+    display: none;
+}
+
+.addUserInfo {
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    width: 700px;
+    height: 300px;
+    padding: 0 2rem;
+    border: 2px solod black;
+    background-color: #fff;
+    align-content: center;
+    display: none;
+}
+
+.addUserInfo h4 {
+    font-size: 20px;
+}
+
+.addUserInfo input {
+    width: 100%;
+    height: 40px;
+    margin: 2rem 0;
+    padding-left: 1rem;
+}
+
+.create{
+    width: 90px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+}
+
+.quit{
+    width: 90px;
+    height: 40px;
+    border: 2px solid red;
+    background-color: red;
+    color: #fff;
+    cursor: pointer;
+}

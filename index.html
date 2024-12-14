@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_2.css">
+    <link rel="stylesheet" href="quiz_section.css">
+</head>
+
+<body>
+    <div id="page_first">
+        <header>
+            <div class="logo">
+                <h1>Quiz Pop</h1>
+            </div>
+            <div class="userBtn">
+                <button>Create User</button>
+                <h2> usernaem</h2>
+            </div>
+        </header>
+        <div class="hero">
+            <div class="project_info">
+                <h1>Take Your <span style="color: red;">Knowledge</span> to the Next level</h1>
+                <button class="startBtn">Start Quiz ></button>
+            </div>
+            <div class="hero_section_logo">
+                <img src="img/pngtree-knowledge-clipart-boy-with-book-reading-a-book-and-light-bulbs-vector-png-image_6801904.png"
+                    alt="">
+            </div>
+
+            <div class="addUser_pop_up">
+                <h3>Please create a user</h3>
+            </div>
+            <div class="createdUser_pop_up">
+                <h3>User created successfully</h3>
+            </div>
+        </div>
+
+        <div class="addUserInfo">
+            <h4>Username</h4>
+            <input type="text" placeholder="Enter user name" onclick="focus">
+            <div class="btns">
+                <button class="create">Create</button>
+                <button class="quit">Quit</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page_second">
+        <div class="header_2">
+            <h1>Quiz Pop</h1>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Quiz</a></li>
+                <li><a href="">Score</a></li>
+            </ul>
+
+            <h2 class="userName"></h2>
+        </div>
+
+        <div class="hero_2">
+            <div class="heading">
+                <h1>Welcome to Quiz App</h1>
+            </div>
+            <div class="heading_2">
+                <h2>Select Topic</h2>
+            </div>
+            <div class="section_1">
+                <h1>Music</h1>
+            </div>
+            <div class="section_2">
+                <h1>Modern Art</h1>
+            </div>
+            <div class="section_3">
+                <h1>Coding</h1>
+            </div>
+            <button class="start_game">Start</button>
+
+        </div>
+    </div>
+
+    <div class="quiz_section">
+        <div class="container">
+            <div class="quizBox">
+                <h1 style="padding-left: 8rem;">Coding Quiz</h1>
+                <div class="ques_opt_box">
+                    <div class="question_box"> </div>
+                    <div class="options"> </div>
+                    <div class="quiz_btns">
+                        <button id="nextQues">Next</button>
+                        <button id="quit_quiz">Quit</button>
+                    </div>
+
+                </div>
+
+
+                <div id= "quiz_result_box" >
+                    <div class="result_heading">
+                        <h1>Well Done! You answered All the Quistions.</h1>
+                        <p></p>
+                    </div>
+                    <div class="quiz_result_box_btns">
+                        <button id="getResultBtn">Get Result</button>
+                        <button id="playAgain">Play Again</button>
+                        <button id="quit_quiz_result">Quit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

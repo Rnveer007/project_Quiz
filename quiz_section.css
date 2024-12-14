@@ -1,0 +1,153 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+.quiz_section {
+    display: none;
+}
+
+.container {
+    background-color: rgb(221, 180, 17);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.quizBox{
+    width: 1000px;
+    height: 1000px;
+    /* text-align: center; */
+    align-content: center;
+}
+
+.quizBox h1 {
+    color: #fff;
+    font-size: 42px;
+    margin-bottom: 3rem;
+    /* padding-left: 8rem; */
+}
+
+.options{
+    padding-left: 3rem;
+}
+
+.ques_opt_box {
+    width: 700px;
+    height: 400px;
+    border: 2px solid #fff;
+    background-color: #fff;
+    padding: 2rem;
+}
+
+.questionHeading {
+    margin-bottom: 2rem;
+}
+
+.optHeading {
+    margin: 1rem 0;
+    cursor: pointer;
+}
+
+.quiz_btns {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+#nextQues {
+    width: 100px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#quit_quiz {
+    width: 100px;
+    height: 40px;
+    border: none;
+    background-color: red;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.ques_opt_box{
+    /* display: none; */
+    margin: auto;
+}
+
+
+.result_heading{
+    height: 220px;
+}
+
+#quiz_result_box {
+    width: 800px !important;
+    height: 400px;
+    background-color: #fff !important;
+    margin: auto;
+    display: none;
+}
+
+.quiz_result_box_btns{
+    text-align: center;
+}
+#getResultBtn{
+    width: 150px;
+    height: 40px;
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 4rem;
+}
+
+#playAgain{
+    width: 150px;
+    height: 40px;
+    border: none;
+    background-color: rgb(67, 182, 220);
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#quit_quiz_result{
+    width: 150px;
+    height: 40px;
+    border: none;
+    background-color: rgb(169, 57, 34);
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;   
+}
+.result_heading h1{
+  color: #000;
+  text-align: center;
+  padding-top: 3rem;
+}
+
+.userBtn h2{
+    display: none;
+}
+
+.result_heading p{
+    display: none;
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+}
