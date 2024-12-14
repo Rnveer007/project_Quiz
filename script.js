@@ -8,7 +8,7 @@ let btnStartQuiz = document.querySelector(".startBtn");
 let creatUserPop_up = document.querySelector(".addUser_pop_up");
 let userAddedPop_up = document.querySelector(".createdUser_pop_up");
 let userDetails = document.querySelector(".addUserInfo");
-let userInput = document.querySelector(".addUserInfo input")
+let userInput = document.querySelector(".addUserInfo input");
 let btnAddDetails = document.querySelector(".create");
 let btnQuitAddDetails = document.querySelector(".quit");
 let userNameBox = document.querySelector(".userName");
@@ -33,7 +33,6 @@ let isModernArtSelected = false;
 let isCodingSelected = false;
 
 let questionsArry = [];
-
 let correctAns = [];
 let curruntClickedAns = [];
 
@@ -123,7 +122,7 @@ function showQuestion() {
     const randomIndex = randomQuestions();
     let ques = document.createElement('h2');
     ques.innerHTML = `${"Q :- "} ${questions[randomIndex].q}`;
-    correctAns = questions[randomIndex].a; // Get the correct answers
+    correctAns.push(questions[randomIndex].a); // Get the correct answers
 
 
     ques.classList = "questionHeading";
