@@ -23,7 +23,7 @@
             </div>
             <div class="userBtn">
                 <button>Create User</button>
-                <h2> usernaem</h2>
+                <h2></h2>
             </div>
         </header>
         <div class="hero">
@@ -59,9 +59,9 @@
         <div class="header_2">
             <h1>Quiz Pop</h1>
             <ul>
-                <li><a href="">Home</a></li>
+                <li><a href="" id="home">Home</a></li>
                 <li><a href="">Quiz</a></li>
-                <li><a href="">Score</a></li>
+                <li id="score" >Score</li>
             </ul>
 
             <h2 class="userName"></h2>
@@ -86,12 +86,30 @@
             <button class="start_game">Start</button>
 
         </div>
+
+        <div id="score_section">
+         <div class="scroe_box">
+            <h1 style="text-align: center;">Total Score</h1>
+            <div class="score_info">
+                <h1>Topic</h1>
+                <h1>Score</h1>
+                <h1>Date and Time</h1>
+            </div>
+
+            <div class="score_info">
+                <h1 id="topic"> Coding </h1>
+                <h1 id="scoreitem"> </h1>
+                <h1 id="date"> </h1>
+            </div>
+         </div>
+        </div>
     </div>
 
     <div class="quiz_section">
         <div class="container">
             <div class="quizBox">
                 <h1 style="padding-left: 25rem;">Coding Quiz</h1>
+                <h2 id="time"> 15</h2>
                 <div class="ques_opt_box">
                     <div class="question_box"> </div>
                     <div class="options"> </div>
@@ -119,6 +137,7 @@
         </div>
     </div>
 
+   
 
 
 

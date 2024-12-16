@@ -1,7 +1,5 @@
 import { questions } from "./questions.js";
-// console.log(questions);
 let firstPage = document.querySelector("#page_first")
-// let btnUser = document.querySelector(".userBtn");
 let btnAddUser = document.querySelector(".userBtn button");
 let userNameHeading = document.querySelector(".userBtn h2");
 let btnStartQuiz = document.querySelector(".startBtn");
@@ -19,41 +17,55 @@ let quizSection = document.querySelector(".quiz_section");
 let questionBox = document.querySelector(".question_box");
 let optBox = document.querySelector(".options");
 let btnNextQues = document.querySelector("#nextQues");
-let closeQuiz = document.querySelector("#quit_quiz");
-let quiInfoBox = document.querySelector(".ques_opt_box");
+let btnCloseQuiz = document.querySelector("#quit_quiz");
+let quizInfoBox = document.querySelector(".ques_opt_box");
 let quizResultItmes = document.querySelector("#quiz_result_box ");
 let closeResultBox = document.querySelector("#quit_quiz_result");
 let finalResulBox = document.querySelector(".result_heading p");
-let showFinalResult = document.querySelector("#getResultBtn");
+let btnShowFinalResult = document.querySelector("#getResultBtn");
+let btnPlayAgain = document.querySelector("#playAgain");
+let showTime = document.querySelector("#time");
+let topicBox = document.querySelector("#topic");
+let scoreBox = document.querySelector("#scoreitem");
+let dateBox = document.querySelector("#date");
+let hero_2_section = document.querySelector(".hero_2");
+let btnScore = document.querySelector("#score");
+let scoreSection = document.querySelector("#score_section");
+console.log(scoreSection);
 
-
-
+// Flags for category selection
 let isMusicSelected = false;
 let isModernArtSelected = false;
 let isCodingSelected = false;
 
+// Variables to manage questions and answers
 let questionsArry = [];
 let correctAns = [];
 let curruntClickedAns = [];
+
+let timer = 15;
+let timerInterval;  
 
 
 
 btnStartQuiz.addEventListener("click", () => {
     if (userInput.value.trim() === '') {
-        creatUserPop_up.style.display = 'block';
+        creatUserPop_up.style.display = 'block'; // Show a popup if the input is empty
 
         setTimeout(() => {
-            creatUserPop_up.style.display = "none";
+            creatUserPop_up.style.display = "none"; // hide popup after 1 sec
         }, 1000);
     }
     else {
-        firstPage.style.display = "none";
-        secondPage.style.display = "block";
+        firstPage.style.display = "none"; // Hide first page
+        secondPage.style.display = "block"; // show second page
     }
 });
 
+// Event Listener: Displays the form to add user details
 btnAddUser.addEventListener("click", () => {
-    userDetails.style.display = "block";
+    userDetails.style.display = "block";  // Show a popup if the input is empty
+
 })
 
 btnAddDetails.addEventListener("click", () => {
@@ -97,7 +109,7 @@ btnQuitAddDetails.addEventListener("click", () => {
 
 // Event listener for selecting the coding section
 codingOption.addEventListener("click", () => {
-    codingOption.style.border = "3px solid green";
+    codingOption.style.border = "3px solid green"; // Highlight coding selection
     isCodingSelected = true;
 });
 
@@ -109,52 +121,60 @@ btnStartGame.addEventListener("click", () => {
     }
     else {
         // Navigate to the quiz section and display a question
-        secondPage.style.display = "none";
-        quizSection.style.display = "block";
-        showQuestion();
-    }
+        secondPage.style.display = "none"; // Hide category/second page
+        quizSection.style.display = "block"; // show quiz section
+
+        showQuestion(); // Display the first question
+        startTimer();
+       }
 });
 
 
 // Function to display a question
 
 function showQuestion() {
-    const randomIndex = randomQuestions();
+    const randomIndex = randomQuestions(); // Get a random question
     let ques = document.createElement('h2');
-    ques.innerHTML = `${"Q :- "} ${questions[randomIndex].q}`;
+    ques.innerHTML = `${"Q :- "} ${questions[randomIndex].q}`;// Display question
     correctAns.push(questions[randomIndex].a); // Get the correct answers
 
 
     ques.classList = "questionHeading";
     questionBox.appendChild(ques);
 
-    showOptions(questions[randomIndex].opt);
+    showOptions(questions[randomIndex].opt); // Display options.
 };
 
 
-// Function to display options for a question
+// Function to display options for a question.
 function showOptions(arry) {
     arry.forEach((option) => {
-        let optPara = document.createElement("p");
+        let optPara = document.createElement("button");
         optPara.classList = "optHeading";
         optPara.innerHTML = option;
         optBox.append(optPara);
-
-        optPara.addEventListener("click", clickedOpt);
+   
+        optBox.addEventListener("click",function(e){
+if(e.target.tagName==='BUTTON'){
+optBox.querySelectorAll("button").forEach(btn=> btn.disabled=true)
+e.target.disabled=false
+}
+        });
     })
 
 };
 
-// Event handler for clicking an option
-function clickedOpt(event) {
-    const selectedOption = event.target;
-    selectedOption.style.backgroundColor = "green";
-    selectedOption.style.color = "white";
-    curruntClickedAns.push(selectedOption.innerHTML);  // Add the selected option to the user's answers
-}
+// Event handler for clicking an option.
+// function clickedOpt(event) {
+//     const selectedOption = event.target;
+//     selectedOption.style.backgroundColor = "green";
+//     selectedOption.style.color = "white";
+
+//     curruntClickedAns.push(selectedOption.innerHTML); // Store user's answer.
+// }
 
 
-// Function to get a random question index
+// Function to get a random question index.
 
 function randomQuestions() {
     let storedQuestions = Math.floor(Math.random() * questions.length);
@@ -168,42 +188,39 @@ function randomQuestions() {
 };
 
 
-// Event listener for the "Next Question" button
+// Event listener for the "Next Question" button.
 btnNextQues.addEventListener("click", () => {
     if (questionsArry.length === questions.length) {
         // alert("All questions have been used.");
 
-        quiInfoBox.style.display = "none";
-        quizResultItmes.style.display = "block";  // Show the results
+        quizInfoBox.style.display = "none";
+        quizResultItmes.style.display = "block";  // Show the results.
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
-        questionsArry = []; // Reset the questions array
+        questionsArry = []; 
+        clearInterval(timerInterval);
+        showTime.innerHTML = "0"
+        
+        // Reset the questions array.
     }
     else {
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
-        showQuestion();  // Show the next question
+        showQuestion();  // Show the next question.
     }
 });
 
-// Event listener for the "Close Quiz" button
-closeQuiz.addEventListener("click", () => {
-    // Reset various elements and flags to their initial state
+// Event listener for the "Close Quiz" button.
+btnCloseQuiz.addEventListener("click", () => {
+    // Reset all elements and return to the second page.
     userInput.value = '';
-    userNameHeading.innerHTML = '';
-    userNameHeading.style.display = "none"
-    userNameBox.innerHTML = '';
-    userNameBox.style.display = "none"
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
     questionsArry = [];
     codingOption.style.border = "";
     isCodingSelected = false;
     quizSection.style.display = "none";
-    btnAddUser.style.display = "block"
-    firstPage.style.display = "block";
-    btnStartQuiz;
-
+    secondPage.style.display = "block";
 });
 
 
@@ -218,25 +235,26 @@ closeResultBox.addEventListener("click", () => {
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
     questionsArry = [];
+    correctAns = [];
+    curruntClickedAns = [];
     codingOption.style.border = "";
     isCodingSelected = false;
     btnAddUser.style.display = "block"
     firstPage.style.display = "block";
-    quiInfoBox.style.display = "block";
+    quizInfoBox.style.display = "block";
     quizResultItmes.style.display = "none"
     quizSection.style.display = "none";
-
 });
 
 
 // Event listener for the "Show Final Result" button
-showFinalResult.addEventListener("click", () => {
+btnShowFinalResult.addEventListener("click", () => {
     let score = 0;
 
     // Compare clicked answers with the correct answers
     curruntClickedAns.forEach((clickedAnswer, index) => {
         if (clickedAnswer === correctAns[index]) {
-            score++; 
+            score++;
         }
     });
 
@@ -244,19 +262,70 @@ showFinalResult.addEventListener("click", () => {
     finalResulBox.innerHTML = `Your Score: ${score} / ${correctAns.length}`;
 
     // Show the result box
-    finalResulBox.style.display = "block"
+    finalResulBox.style.display = "block";
+});
+
+
+btnPlayAgain.addEventListener("click", () => {
+    quizResultItmes.style.display = "none";
+    quizInfoBox.style.display = "block";
+
+    questionsArry = [];
+    correctAns = [];
+    curruntClickedAns = [];
+
+    questionBox.innerHTML = '';
+    optBox.innerHTML = '';
+
+    finalResulBox.style.display = "none"
+    quizSection.style.display = "block";
+
+    // Start with a new question
+    startTimer();
+    showQuestion();
 });
 
 
 
+btnScore.addEventListener("click", () => {
+    hero_2_section.style.display = "none";
+    scoreSection.style.display = "block";
+
+
+    // Get the current date and time
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString(); // This formats the date and time as a string
+
+    // Display the current date and time in the dateBox
+    dateBox.innerHTML = formattedDate;
+});
 
 
 
+function startTimer() {
+    // Clear any existing timer intervals
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
 
+    // Reset the timer to 15 seconds
+    timer = 15;
+    showTime.innerHTML = timer;
 
+    // Start the countdown timer
+    timerInterval = setInterval(() => {
+        showTime.innerHTML = --timer; // Update the timer display
 
-
-
-
-
-
+        if (timer === 0 ) {
+            // Timer ends, handle what happens when the time is up
+            clearInterval(timerInterval);
+            questionsArry = [];
+            correctAns = [];
+            curruntClickedAns = [];
+            questionBox.innerHTML = '';
+            optBox.innerHTML = '';
+            quizInfoBox.style.display = "none";
+            quizResultItmes.style.display = "block";
+        }
+    }, 1000); // Decrease the timer every second
+}
