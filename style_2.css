@@ -22,10 +22,15 @@
     list-style: none;
 }
 
-.header_2 ul li a{
+.header_2 ul li a {
     text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.header_2 ul li {
     margin: 0 1rem;
     color: black;
+    cursor: pointer;
 
 }
 

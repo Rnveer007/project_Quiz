@@ -25,18 +25,20 @@ let finalResulBox = document.querySelector(".result_heading p");
 let btnShowFinalResult = document.querySelector("#getResultBtn");
 let btnPlayAgain = document.querySelector("#playAgain");
 let showTime = document.querySelector("#time");
-let topicBox = document.querySelector("#topic");
-let scoreBox = document.querySelector("#scoreitem");
+// let topicBox = document.querySelector("#topic");
+// let scoreBox = document.querySelector("#scoreitem");
+let secondPageQuizBtn = document.querySelector("#quizBtn_secondPage");
 let dateBox = document.querySelector("#date");
 let hero_2_section = document.querySelector(".hero_2");
 let btnScore = document.querySelector("#score");
 let scoreSection = document.querySelector("#score_section");
-console.log(scoreSection);
+let secondPageHomeBtn = document.querySelector("#secondPageHomeBtn");
 
 // Flags for category selection
 let isMusicSelected = false;
 let isModernArtSelected = false;
 let isCodingSelected = false;
+let quizFlag = false;
 
 // Variables to manage questions and answers
 let questionsArry = [];
@@ -44,12 +46,15 @@ let correctAns = [];
 let curruntClickedAns = [];
 
 let timer = 15;
-let timerInterval;  
+let timerInterval;
 
 
+// startQuiz();
 
-btnStartQuiz.addEventListener("click", () => {
-    if (userInput.value.trim() === '') {
+btnStartQuiz.addEventListener("click", startQuiz);
+
+function startQuiz() {
+    if (userInput.value === '') {
         creatUserPop_up.style.display = 'block'; // Show a popup if the input is empty
 
         setTimeout(() => {
@@ -60,7 +65,7 @@ btnStartQuiz.addEventListener("click", () => {
         firstPage.style.display = "none"; // Hide first page
         secondPage.style.display = "block"; // show second page
     }
-});
+}
 
 // Event Listener: Displays the form to add user details
 btnAddUser.addEventListener("click", () => {
@@ -126,7 +131,7 @@ btnStartGame.addEventListener("click", () => {
 
         showQuestion(); // Display the first question
         startTimer();
-       }
+    }
 });
 
 
@@ -153,15 +158,15 @@ function showOptions(arry) {
         optPara.classList = "optHeading";
         optPara.innerHTML = option;
         optBox.append(optPara);
-   
-        optBox.addEventListener("click",function(e){
-if(e.target.tagName==='BUTTON'){
-optBox.querySelectorAll("button").forEach(btn=> btn.disabled=true)
-e.target.disabled=false
-}
-        });
-    })
 
+        optPara.addEventListener("click", function (e) {
+            if (e.target.tagName === 'BUTTON') {
+                optBox.querySelectorAll("button").forEach(btn => btn.disabled = true)
+                e.target.disabled = false;
+                curruntClickedAns.push(e.target.innerHTML); // Store user's answer.
+            }
+        });
+    });
 };
 
 // Event handler for clicking an option.
@@ -184,7 +189,7 @@ function randomQuestions() {
     else {
         questionsArry.push(storedQuestions);
         return storedQuestions;
-    }
+    };
 };
 
 
@@ -197,17 +202,17 @@ btnNextQues.addEventListener("click", () => {
         quizResultItmes.style.display = "block";  // Show the results.
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
-        questionsArry = []; 
+        questionsArry = [];
         clearInterval(timerInterval);
         showTime.innerHTML = "0"
-        
+
         // Reset the questions array.
     }
     else {
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
         showQuestion();  // Show the next question.
-    }
+    };
 });
 
 // Event listener for the "Close Quiz" button.
@@ -221,6 +226,7 @@ btnCloseQuiz.addEventListener("click", () => {
     isCodingSelected = false;
     quizSection.style.display = "none";
     secondPage.style.display = "block";
+    quizFlag = true;
 });
 
 
@@ -229,9 +235,9 @@ btnCloseQuiz.addEventListener("click", () => {
 closeResultBox.addEventListener("click", () => {
     userInput.value = '';
     userNameHeading.innerHTML = '';
-    userNameHeading.style.display = "none"
+    userNameHeading.style.display = "none";
     userNameBox.innerHTML = '';
-    userNameBox.style.display = "none"
+    userNameBox.style.display = "none";
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
     questionsArry = [];
@@ -239,7 +245,7 @@ closeResultBox.addEventListener("click", () => {
     curruntClickedAns = [];
     codingOption.style.border = "";
     isCodingSelected = false;
-    btnAddUser.style.display = "block"
+    btnAddUser.style.display = "block";
     firstPage.style.display = "block";
     quizInfoBox.style.display = "block";
     quizResultItmes.style.display = "none"
@@ -291,7 +297,6 @@ btnScore.addEventListener("click", () => {
     hero_2_section.style.display = "none";
     scoreSection.style.display = "block";
 
-
     // Get the current date and time
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleString(); // This formats the date and time as a string
@@ -316,7 +321,7 @@ function startTimer() {
     timerInterval = setInterval(() => {
         showTime.innerHTML = --timer; // Update the timer display
 
-        if (timer === 0 ) {
+        if (timer === 0) {
             // Timer ends, handle what happens when the time is up
             clearInterval(timerInterval);
             questionsArry = [];
@@ -328,4 +333,22 @@ function startTimer() {
             quizResultItmes.style.display = "block";
         }
     }, 1000); // Decrease the timer every second
-}
+};
+
+
+secondPageQuizBtn.addEventListener("click", () => {
+    if (quizFlag === false) {
+        alert("Quiz not availble");
+        return;
+    }
+    else {
+        questionsArry = [];
+        correctAns = [];
+        curruntClickedAns = [];
+        clearInterval(timerInterval);
+        secondPage.style.display = "none";
+        quizSection.style.display = "block";
+        showQuestion();
+        startTimer();
+    }
+});
