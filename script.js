@@ -1,4 +1,6 @@
 import { questions } from "./questions.js";
+import { musicQuestions } from "./musicQues.js";
+
 let firstPage = document.querySelector("#page_first")
 let btnAddUser = document.querySelector(".userBtn button");
 let userNameHeading = document.querySelector(".userBtn h2");
@@ -11,6 +13,7 @@ let btnAddDetails = document.querySelector(".create");
 let btnQuitAddDetails = document.querySelector(".quit");
 let userNameBox = document.querySelector(".userName");
 let secondPage = document.querySelector(".page_second");
+let musicOption = document.querySelector(".section_1");
 let codingOption = document.querySelector(".section_3");
 let btnStartGame = document.querySelector(".start_game");
 let quizSection = document.querySelector(".quiz_section");
@@ -25,29 +28,95 @@ let finalResulBox = document.querySelector(".result_heading p");
 let btnShowFinalResult = document.querySelector("#getResultBtn");
 let btnPlayAgain = document.querySelector("#playAgain");
 let showTime = document.querySelector("#time");
-// let topicBox = document.querySelector("#topic");
-// let scoreBox = document.querySelector("#scoreitem");
-let secondPageQuizBtn = document.querySelector("#quizBtn_secondPage");
-let dateBox = document.querySelector("#date");
+let dateBox = document.querySelectorAll("#date");
 let hero_2_section = document.querySelector(".hero_2");
 let btnScore = document.querySelector("#score");
 let scoreSection = document.querySelector("#score_section");
-let secondPageHomeBtn = document.querySelector("#secondPageHomeBtn");
+let showUserName = document.querySelectorAll("#userNameHeading");
+let scoreItemBox = document.querySelector("#scoreitem");
+let musicScoreItemBox = document.querySelector("#scoreitem_1");
+let musicScoreSection = document.querySelector(".score_info_2");
+let codingScoreSection = document.querySelector(".score_info_3");
 
 // Flags for category selection
 let isMusicSelected = false;
 let isModernArtSelected = false;
 let isCodingSelected = false;
-let quizFlag = false;
 
 // Variables to manage questions and answers
-let questionsArry = [];
-let correctAns = [];
-let curruntClickedAns = [];
+let codingQuestionsArry = [];
+let condingCorrectAns = [];
+let codingCurruntClickedAns = [];
+
+let musicQuestionsArry = [];
+let musicCorrectAns = [];
+let musicCurruntClickedAns = [];
 
 let timer = 15;
 let timerInterval;
 
+const data =
+    localStorage.getItem("storedNames") !== null
+        ? JSON.parse(localStorage.getItem("storedNames"))
+        : [];
+const player = {};
+
+
+btnAddUser.addEventListener("click", () => {
+    userDetails.style.display = "block";  // Show a popup if the input is empty
+
+})
+
+btnAddDetails.addEventListener("click", startAddingUser);
+
+function startAddingUser() {
+    if (userInput.value === '') {
+        alert("Fill the details");
+    }
+    else {
+        player.name = userInput.value;
+        player.regDate = getRegistrationDate();
+        storeInLS();
+
+        // Update UI elements to reflect the added user
+        dateBox.forEach((date) => {
+            date.innerHTML = player.regDate
+        })
+        showUserName.forEach((name) => {
+            name.innerHTML = player.name
+        })
+        userNameBox.innerHTML = player.name;
+        userDetails.style.display = "none";
+        userAddedPop_up.style.display = "block";
+        btnAddUser.style.display = "none";
+        userNameHeading.innerHTML = player.name;
+        userNameHeading.style.display = "block";
+
+
+        setTimeout(() => {
+            userAddedPop_up.style.display = "none";
+        }, 1000);
+    };
+};
+
+
+function storeInLS() {
+    // data.pop();
+    data.push(player);
+    localStorage.setItem("storedNames", JSON.stringify(data));
+    // console.log(data);
+}
+
+function getRegistrationDate() {
+    const dt = new Date();
+    const date = dt.getDate();
+    const month = dt.getMonth() + 1;
+    const year = dt.getFullYear();
+    const hours = dt.getHours();
+    const min = dt.getMinutes();
+    const sec = dt.getSeconds();
+    return `${date}-${month}-${year} ${hours}:${min}:${sec}`;
+}
 
 // startQuiz();
 
@@ -67,44 +136,6 @@ function startQuiz() {
     }
 }
 
-// Event Listener: Displays the form to add user details
-btnAddUser.addEventListener("click", () => {
-    userDetails.style.display = "block";  // Show a popup if the input is empty
-
-})
-
-btnAddDetails.addEventListener("click", () => {
-    if (userInput.value.trim() === '') {
-        alert("Fill the details");
-    }
-    else {
-        let userData = userInput.value.trim();
-        userNameBox.innerHTML = userData;
-
-        // Retrieve existing users from localStorage
-        let existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-        // Add new user to the array
-        existingUsers.push(userData);
-
-        // Save updated array back to localStorage
-        localStorage.setItem("users", JSON.stringify(existingUsers));
-
-        // Update UI elements to reflect the added user
-
-        userDetails.style.display = "none";
-        userAddedPop_up.style.display = "block";
-        btnAddUser.style.display = "none";
-        userNameHeading.innerHTML = userData;
-        userNameHeading.style.display = "block";
-
-
-        setTimeout(() => {
-            userAddedPop_up.style.display = "none";
-        }, 1000);
-    };
-});
-
 
 // Event listener for the "Quit Adding Details" button
 btnQuitAddDetails.addEventListener("click", () => {
@@ -112,11 +143,34 @@ btnQuitAddDetails.addEventListener("click", () => {
     userDetails.style.display = "none";
 })
 
+// Initially hide both sections
+musicScoreSection.style.display = "none";
+codingScoreSection.style.display = "none";
+
 // Event listener for selecting the coding section
 codingOption.addEventListener("click", () => {
     codingOption.style.border = "3px solid green"; // Highlight coding selection
+    musicOption.style.border = ""; 
     isCodingSelected = true;
+    isMusicSelected = false;
+
+    // Show the coding score section and hide the music score section
+    codingScoreSection.style.display = "flex";
+    musicScoreSection.style.display = "none";
 });
+
+// Event listener for selecting the music section
+musicOption.addEventListener("click", () => {
+    musicOption.style.border = "3px solid green";  
+    codingOption.style.border = ""; // Remove highlight from coding selection
+    isMusicSelected = true;
+    isCodingSelected = false;
+
+    // Show the music score section and hide the coding score section
+    musicScoreSection.style.display = "flex";
+    codingScoreSection.style.display = "none";
+});
+
 
 // Event listener for the "Start Game" button
 btnStartGame.addEventListener("click", () => {
@@ -124,35 +178,55 @@ btnStartGame.addEventListener("click", () => {
         alert("Please select a section first");
         return;
     }
-    else {
+    else if (isCodingSelected === true) {
         // Navigate to the quiz section and display a question
         secondPage.style.display = "none"; // Hide category/second page
         quizSection.style.display = "block"; // show quiz section
 
-        showQuestion(); // Display the first question
+        showCodingQuestion(); // Display the first question
+        startTimer();
+    }
+
+    else if (isMusicSelected === true) {
+        // Navigate to the quiz section and display a question
+        secondPage.style.display = "none"; // Hide category/second page
+        quizSection.style.display = "block"; // show quiz section
+
+        // showCodingQuestion(); // Display the first question
+        showMusicQuestion(); // Display the first question
         startTimer();
     }
 });
 
+function showMusicQuestion() {
+    questionBox.innerHTML = ""; // Clear the previous question
+    optBox.innerHTML = "";      // Clear the previous options
 
-// Function to display a question
+    const musicRandomIndex = musicRandomQuestions(); // Get a random question
+    let musicQuestionHeading = document.createElement('h2');
+    musicQuestionHeading.innerHTML = `${"Q :- "} ${musicQuestions[musicRandomIndex].question}`;// Display question
+    musicCorrectAns.push(musicQuestions[musicRandomIndex].answer); // Get the correct answers
 
-function showQuestion() {
-    const randomIndex = randomQuestions(); // Get a random question
-    let ques = document.createElement('h2');
-    ques.innerHTML = `${"Q :- "} ${questions[randomIndex].q}`;// Display question
-    correctAns.push(questions[randomIndex].a); // Get the correct answers
+    musicQuestionHeading.classList = "questionHeading";
+    questionBox.appendChild(musicQuestionHeading);
 
-
-    ques.classList = "questionHeading";
-    questionBox.appendChild(ques);
-
-    showOptions(questions[randomIndex].opt); // Display options.
+    showMusicOptions(musicQuestions[musicRandomIndex].options); // Display options.
 };
 
 
-// Function to display options for a question.
-function showOptions(arry) {
+
+function musicRandomQuestions() {
+    let musicStoredQuestions = Math.floor(Math.random() * musicQuestions.length);
+    if (musicQuestionsArry.includes(musicStoredQuestions)) {
+        return musicRandomQuestions(); // Avoid duplicate questions
+    }
+    else {
+        musicQuestionsArry.push(musicStoredQuestions);
+        return musicStoredQuestions;
+    };
+};
+
+function showMusicOptions(arry) {
     arry.forEach((option) => {
         let optPara = document.createElement("button");
         optPara.classList = "optHeading";
@@ -163,57 +237,88 @@ function showOptions(arry) {
             if (e.target.tagName === 'BUTTON') {
                 optBox.querySelectorAll("button").forEach(btn => btn.disabled = true)
                 e.target.disabled = false;
-                curruntClickedAns.push(e.target.innerHTML); // Store user's answer.
+                musicCurruntClickedAns.push(e.target.innerHTML); // Store user's answer.
             }
         });
     });
 };
 
-// Event handler for clicking an option.
-// function clickedOpt(event) {
-//     const selectedOption = event.target;
-//     selectedOption.style.backgroundColor = "green";
-//     selectedOption.style.color = "white";
-
-//     curruntClickedAns.push(selectedOption.innerHTML); // Store user's answer.
-// }
+function showCodingQuestion() {
+    const randomIndex = randomQuestions(); // Get a random question
+    let codingQuestions = document.createElement('h2');
+    codingQuestions.innerHTML = `${"Q :- "} ${questions[randomIndex].q}`;// Display question
+    condingCorrectAns.push(questions[randomIndex].a); // Get the correct answers
 
 
-// Function to get a random question index.
+    codingQuestions.classList = "questionHeading";
+    questionBox.appendChild(codingQuestions);
+
+    showCodingOptions(questions[randomIndex].opt); // Display options.
+};
+
+
+// Function to display options for a question.
+function showCodingOptions(arry) {
+    arry.forEach((option) => {
+        let optPara = document.createElement("button");
+        optPara.classList = "optHeading";
+        optPara.innerHTML = option;
+        optBox.append(optPara);
+
+        optPara.addEventListener("click", function (e) {
+            if (e.target.tagName === 'BUTTON') {
+                optBox.querySelectorAll("button").forEach(btn => btn.disabled = true)
+                e.target.disabled = false;
+                codingCurruntClickedAns.push(e.target.innerHTML); // Store user's answer.
+            }
+        });
+    });
+};
 
 function randomQuestions() {
     let storedQuestions = Math.floor(Math.random() * questions.length);
-    if (questionsArry.includes(storedQuestions)) {
+    if (codingQuestionsArry.includes(storedQuestions)) {
         return randomQuestions();
     }
     else {
-        questionsArry.push(storedQuestions);
+        codingQuestionsArry.push(storedQuestions);
         return storedQuestions;
     };
 };
 
 
-// Event listener for the "Next Question" button.
 btnNextQues.addEventListener("click", () => {
-    if (questionsArry.length === questions.length) {
-        // alert("All questions have been used.");
-
+    // Check if all questions for the selected category have been used
+    if (codingQuestionsArry.length === questions.length) {
         quizInfoBox.style.display = "none";
         quizResultItmes.style.display = "block";  // Show the results.
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
-        questionsArry = [];
+        codingQuestionsArry = [];
         clearInterval(timerInterval);
-        showTime.innerHTML = "0"
-
-        // Reset the questions array.
-    }
-    else {
+        showTime.innerHTML = "0";
+    } else if (musicQuestionsArry.length === musicQuestions.length) {
+        quizInfoBox.style.display = "none";
+        quizResultItmes.style.display = "block";  // Show the results.
         questionBox.innerHTML = '';
         optBox.innerHTML = '';
-        showQuestion();  // Show the next question.
+        musicQuestionsArry = [];
+        clearInterval(timerInterval);
+        showTime.innerHTML = "0";
+    } else {
+        // Clear the previous question and options
+        questionBox.innerHTML = '';
+        optBox.innerHTML = '';
+
+        // Show the next question based on the selected category
+        if (isCodingSelected) {
+            showCodingQuestion();
+        } else if (isMusicSelected) {
+            showMusicQuestion();
+        }
     };
 });
+
 
 // Event listener for the "Close Quiz" button.
 btnCloseQuiz.addEventListener("click", () => {
@@ -221,16 +326,13 @@ btnCloseQuiz.addEventListener("click", () => {
     userInput.value = '';
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
-    questionsArry = [];
+    codingQuestionsArry = [];
     codingOption.style.border = "";
     isCodingSelected = false;
     quizSection.style.display = "none";
     secondPage.style.display = "block";
-    quizFlag = true;
+    // quizFlag = true;
 });
-
-
-
 
 closeResultBox.addEventListener("click", () => {
     userInput.value = '';
@@ -240,9 +342,9 @@ closeResultBox.addEventListener("click", () => {
     userNameBox.style.display = "none";
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
-    questionsArry = [];
-    correctAns = [];
-    curruntClickedAns = [];
+    codingQuestionsArry = [];
+    condingCorrectAns = [];
+    codingCurruntClickedAns = [];
     codingOption.style.border = "";
     isCodingSelected = false;
     btnAddUser.style.display = "block";
@@ -255,18 +357,38 @@ closeResultBox.addEventListener("click", () => {
 
 // Event listener for the "Show Final Result" button
 btnShowFinalResult.addEventListener("click", () => {
-    let score = 0;
+    if (isCodingSelected) {
+        let score = 0;
 
-    // Compare clicked answers with the correct answers
-    curruntClickedAns.forEach((clickedAnswer, index) => {
-        if (clickedAnswer === correctAns[index]) {
-            score++;
-        }
-    });
+        // Compare clicked answers with the correct answers
+        codingCurruntClickedAns.forEach((clickedAnswer, index) => {
+            if (clickedAnswer === condingCorrectAns[index]) {
+                score++;
+            }
+        });
 
-    // Display the score in the result box
-    finalResulBox.innerHTML = `Your Score: ${score} / ${correctAns.length}`;
+        // Display the score in the result box
+        finalResulBox.innerHTML = `Your Score: ${score} / ${condingCorrectAns.length}`;
+        player.codingScore = `${score} / ${condingCorrectAns.length}`;
+        scoreItemBox.innerHTML = player.codingScore
+        console.log(player.score)
+    }
+    else if (isMusicSelected) {
+        let score = 0;
 
+        // Compare clicked answers with the correct answers
+        musicCurruntClickedAns.forEach((clickedAnswer, index) => {
+            if (clickedAnswer === musicCorrectAns[index]) {
+                score++;
+            }
+        });
+
+        // Display the score in the result box
+        finalResulBox.innerHTML = `Your Score: ${score} / ${musicCorrectAns.length}`;
+        player.musicScore = `${score} / ${musicCorrectAns.length}`
+        musicScoreItemBox.innerHTML = player.musicScore
+
+    }
     // Show the result box
     finalResulBox.style.display = "block";
 });
@@ -276,33 +398,37 @@ btnPlayAgain.addEventListener("click", () => {
     quizResultItmes.style.display = "none";
     quizInfoBox.style.display = "block";
 
-    questionsArry = [];
-    correctAns = [];
-    curruntClickedAns = [];
+    // Reset state for coding questions
+    codingQuestionsArry = [];
+    condingCorrectAns = [];
+    codingCurruntClickedAns = [];
 
+    // Reset state for music questions
+    musicQuestionsArry = [];
+    musicCorrectAns = [];
+    musicCurruntClickedAns = [];
+
+    // Clear the question and options boxes
     questionBox.innerHTML = '';
     optBox.innerHTML = '';
 
-    finalResulBox.style.display = "none"
+    finalResulBox.style.display = "none";
     quizSection.style.display = "block";
 
     // Start with a new question
     startTimer();
-    showQuestion();
+    if (isCodingSelected) {
+        showCodingQuestion();
+    }
+    if (isMusicSelected) {
+        showMusicQuestion();
+    }
 });
-
 
 
 btnScore.addEventListener("click", () => {
     hero_2_section.style.display = "none";
     scoreSection.style.display = "block";
-
-    // Get the current date and time
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString(); // This formats the date and time as a string
-
-    // Display the current date and time in the dateBox
-    dateBox.innerHTML = formattedDate;
 });
 
 
@@ -322,11 +448,10 @@ function startTimer() {
         showTime.innerHTML = --timer; // Update the timer display
 
         if (timer === 0) {
-            // Timer ends, handle what happens when the time is up
             clearInterval(timerInterval);
-            questionsArry = [];
-            correctAns = [];
-            curruntClickedAns = [];
+            codingQuestionsArry = [];
+            condingCorrectAns = [];
+            codingCurruntClickedAns = [];
             questionBox.innerHTML = '';
             optBox.innerHTML = '';
             quizInfoBox.style.display = "none";
@@ -336,19 +461,17 @@ function startTimer() {
 };
 
 
-secondPageQuizBtn.addEventListener("click", () => {
-    if (quizFlag === false) {
-        alert("Quiz not availble");
-        return;
-    }
-    else {
-        questionsArry = [];
-        correctAns = [];
-        curruntClickedAns = [];
-        clearInterval(timerInterval);
-        secondPage.style.display = "none";
-        quizSection.style.display = "block";
-        showQuestion();
-        startTimer();
-    }
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

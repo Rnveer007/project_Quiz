@@ -165,9 +165,6 @@
 }
 
 #time{
-    /* position: absolute;
-    top: 23%;
-    left: 66%; */
     color: #fff;
 } 
 
@@ -179,12 +176,19 @@
     padding-top: 5rem;
     display: none;
 }
+/* .score_info_2 {
+    display: none !important;
+} */
 
-.score_info{
+/* .score_info_3{
+    display: none !important;
+} */
+
+.score_info,.score_info_2, .score_info_3{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 80%;
     height: 80px;
     margin: auto;
     background-color: #fff;
@@ -193,8 +197,17 @@
     margin-top: 2rem;
 }
 
+
+.score_info_2 h1, .score_info_3 h1{
+ font-size: 20px;
+ color: green;
+ width: 240px;
+}
 .score_info h1{
     font-weight: bold;
+    color: red;
+    width: 240px;
+    
 }
 
 #score{
