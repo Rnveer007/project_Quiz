@@ -5,13 +5,15 @@
     font-family: "Poppins";
 }
 
-
 header {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding-top: 2rem;
     height: 20vh;
+    flex-wrap: wrap;
+    gap: 1rem;
+    text-align: center;
 }
 
 .userBtn button {
@@ -22,21 +24,25 @@ header {
     color: #fff;
     font-size: 20px;
     cursor: pointer;
-
 }
 
 .hero {
     background-color: aqua;
-    height: 80vh;
+    height: auto;
+    min-height: 80vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     position: relative;
+    flex-wrap: wrap;
+    padding: 2rem 1rem;
+    gap: 2rem;
 }
 
 .project_info h1 {
-    font-size: 42px;
-    width: 60%;
+    font-size: 2rem;
+    width: 100%;
+    max-width: 500px;
 }
 
 .startBtn {
@@ -46,44 +52,40 @@ header {
     background-color: #000;
     color: #fff;
     font-size: 26px;
-    margin-top: 3rem;
+    margin-top: 2rem;
     cursor: pointer;
 }
 
-.addUser_pop_up {
+.addUser_pop_up,
+.createdUser_pop_up {
     position: absolute;
     top: -20px;
-    left: 40%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: red;
     text-align: center;
     align-content: center;
     color: white;
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     height: 60px;
     display: none;
 }
 
 .createdUser_pop_up {
-    position: absolute;
-    top: -20px;
-    left: 40%;
     background-color: green;
-    text-align: center;
-    align-content: center;
-    color: white;
-    width: 400px;
-    height: 60px;
-    display: none;
 }
 
 .addUserInfo {
     position: absolute;
     top: 25%;
-    left: 30%;
-    width: 700px;
-    height: 300px;
-    padding: 0 2rem;
-    border: 2px solod black;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 700px;
+    height: auto;
+    padding: 2rem 1rem;
+    border: 2px solid black;
     background-color: #fff;
     align-content: center;
     display: none;
@@ -100,19 +102,61 @@ header {
     padding-left: 1rem;
 }
 
-.create{
+.create,
+.quit {
     width: 90px;
     height: 40px;
-    background-color: #000;
-    color: #fff;
     cursor: pointer;
 }
 
-.quit{
-    width: 90px;
-    height: 40px;
+.create {
+    background-color: #000;
+    color: #fff;
+}
+
+.quit {
     border: 2px solid red;
     background-color: red;
     color: #fff;
-    cursor: pointer;
+}
+
+/* Responsive updates */
+@media (max-width: 768px) {
+    .project_info h1 {
+        font-size: 1.5rem;
+        width: 100%;
+    }
+
+    .startBtn {
+        width: 180px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+    }
+
+    .startBtn {
+        width: 150px;
+        font-size: 18px;
+    }
+
+    .project_info h1 {
+        font-size: 1.2rem;
+    }
+
+    .userBtn button {
+        width: 120px;
+        font-size: 16px;
+    }
+
+    .addUserInfo {
+        padding: 1rem;
+    }
+
+    .addUserInfo input {
+        margin: 1rem 0;
+    }
 }

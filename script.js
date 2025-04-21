@@ -60,6 +60,7 @@ const data =
         ? JSON.parse(localStorage.getItem("storedNames"))
         : [];
 const player = {};
+console.log(player);
 
 
 btnAddUser.addEventListener("click", () => {
